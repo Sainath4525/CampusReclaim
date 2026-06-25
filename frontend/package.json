@@ -1,0 +1,12 @@
+{
+  "name": "campusreclaim-frontend",
+  "version": "1.0.0",
+  "description": "Lost & found platform frontend client",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}

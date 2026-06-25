@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusReclaim — Lost & Found for College Campuses</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body class="dark-theme">
+  <!-- Animated Hero Particle Canvas -->
+  <canvas id="hero-particles"></canvas>
+
+  <!-- Header / Floating Navbar -->
+  <header>
+    <nav class="glass-nav">
+      <div class="logo" id="nav-logo">
+        <i data-lucide="search" class="logo-icon"></i>
+        <span>Campus<span class="logo-accent">Reclaim</span></span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#browse-section">Browse</a></li>
+        <li><a href="#report-section">Report</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark/light theme">
+          <i data-lucide="sun" class="sun-icon"></i>
+          <i data-lucide="moon" class="moon-icon"></i>
+        </button>
+        <a href="#report-section" class="btn btn-primary btn-glow">
+          <i data-lucide="plus-circle"></i> Post Item
+        </a>
+      </div>
+      <div class="mobile-menu-btn" id="mobile-menu-toggle">
+        <i data-lucide="menu"></i>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero / Landing Section -->
+    <section class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="badge-glow">🛡️ Verified Campus Network</div>
+          <h1>Something Lost.<br><span class="gradient-text">Someone's Looking.</span></h1>
+          <p class="hero-subtext">
+            CampusReclaim connects lost items with their owners — right here on campus. Search reports, post found items, and claim your belongings quickly.
+          </p>
+          <div class="hero-ctas">
+            <a href="#browse-section" class="btn btn-primary btn-lg btn-glow">
+              <i data-lucide="search"></i> Browse Lost Items
+            </a>
+            <a href="#report-section" class="btn btn-secondary btn-lg">
+              <i data-lucide="megaphone"></i> Report an Item
+            </a>
+          </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar glass-card">
+          <div class="stat-item">
+            <h3 class="stat-number" id="stat-posted" data-target="1240">0</h3>
+            <span class="stat-label">Items Posted</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <h3 class="stat-number" id="stat-recovered" data-target="864">0</h3>
+            <span class="stat-label">Items Recovered</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <h3 class="stat-number" id="stat-users" data-target="3250">0</h3>
+            <span class="stat-label">Active Users</span>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-down">
+        <a href="#browse-section" aria-label="Scroll to browse items">
+          <i data-lucide="chevron-down" class="bounce"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="info-section">
+      <div class="container">
+        <div class="section-header scroll-reveal">
+          <h2>How CampusReclaim Works</h2>
+          <p>Reclaiming your items has never been easier. Just 3 simple steps.</p>
+        </div>
+        <div class="info-grid">
+          <div class="info-card glass-card scroll-reveal">
+            <div class="icon-wrapper">
+              <i data-lucide="file-text"></i>
+            </div>
+            <h3>1. Report</h3>
+            <p>Fill in details, choose a category, pick the campus zone, and upload an image to post your item report.</p>
+          </div>
+          <div class="info-card glass-card scroll-reveal">
+            <div class="icon-wrapper">
+              <i data-lucide="search"></i>
+            </div>
+            <h3>2. Match & Search</h3>
+            <p>Browse through reported lost or found items using our smart real-time location and category filters.</p>
+          </div>
+          <div class="info-card glass-card scroll-reveal">
+            <div class="icon-wrapper">
+              <i data-lucide="gift"></i>
+            </div>
+            <h3>3. Reclaim</h3>
+            <p>Click "I Found This!" or verify your ownership to safely get in touch and arrange a secure hand-off.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel 1 — Browse Section -->
+    <section id="browse-section" class="browse-section">
+      <div class="container">
+        <div class="section-header scroll-reveal">
+          <h2>Browse Lost & Found Items</h2>
+          <p>Find what was lost, or help someone reclaim their belongings.</p>
+        </div>
+
+        <!-- Sticky Filter Bar -->
+        <div class="filter-bar glass-card sticky-filter">
+          <div class="filter-row main-filters">
+            <div class="search-input-wrapper">
+              <i data-lucide="search" class="search-icon"></i>
+              <input type="text" id="filter-search" placeholder="Search items (e.g. key, wallet, iphone)..." autocomplete="off">
+            </div>
+            <div class="filter-select-wrapper">
+              <i data-lucide="grid" class="select-icon"></i>
+              <select id="filter-category" aria-label="Category">
+                <option value="All">All Categories</option>
+                <option value="Electronics">Electronics</option>
+                <option value="ID Cards">ID Cards</option>
+                <option value="Keys">Keys</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Books">Books</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="filter-select-wrapper">
+              <i data-lucide="map-pin" class="select-icon"></i>
+              <select id="filter-location" aria-label="Location">
+                <option value="All">All Locations</option>
+                <option value="Library">Library</option>
+                <option value="Cafeteria">Cafeteria</option>
+                <option value="Dorm Block A">Dorm Block A</option>
+                <option value="Dorm Block B">Dorm Block B</option>
+                <option value="Dorm Block C">Dorm Block C</option>
+                <option value="Sports Ground">Sports Ground</option>
+                <option value="Auditorium">Auditorium</option>
+                <option value="Parking Lot">Parking Lot</option>
+                <option value="Admin Block">Admin Block</option>
+                <option value="Other">Other Zone</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter-row sub-filters">
+            <div class="date-picker-wrapper">
+              <span class="date-label">From:</span>
+              <input type="date" id="filter-date-from" aria-label="Date From">
+              <span class="date-label">To:</span>
+              <input type="date" id="filter-date-to" aria-label="Date To">
+            </div>
+            <div class="sort-select-wrapper">
+              <i data-lucide="sliders-horizontal" class="select-icon"></i>
+              <select id="filter-sort" aria-label="Sort by">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="views">Most Viewed</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Items Grid Container -->
+        <div class="items-grid-container">
+          <!-- Skeleton Loading States -->
+          <div id="items-skeletons" class="items-grid">
+            <!-- 3 Skeleton cards -->
+            <div class="skeleton-card glass-card">
+              <div class="skeleton-img shimmer"></div>
+              <div class="skeleton-content">
+                <div class="skeleton-badge shimmer"></div>
+                <div class="skeleton-title shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-footer shimmer"></div>
+              </div>
+            </div>
+            <div class="skeleton-card glass-card">
+              <div class="skeleton-img shimmer"></div>
+              <div class="skeleton-content">
+                <div class="skeleton-badge shimmer"></div>
+                <div class="skeleton-title shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-footer shimmer"></div>
+              </div>
+            </div>
+            <div class="skeleton-card glass-card">
+              <div class="skeleton-img shimmer"></div>
+              <div class="skeleton-content">
+                <div class="skeleton-badge shimmer"></div>
+                <div class="skeleton-title shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-footer shimmer"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real Items Grid -->
+          <div id="items-grid" class="items-grid hidden"></div>
+
+          <!-- Empty State -->
+          <div id="items-empty-state" class="empty-state hidden">
+            <div class="empty-icon-wrapper">
+              <i data-lucide="inbox"></i>
+            </div>
+            <h3>No Items Found</h3>
+            <p>We couldn't find any items matching your filters. Try adjusting your query or report it if you lost it!</p>
+            <button class="btn btn-secondary" onclick="document.getElementById('filter-search').value=''; resetFilters();">
+              Clear Filters
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel 2 — Report Form Section -->
+    <section id="report-section" class="report-section">
+      <div class="container">
+        <div class="section-header scroll-reveal">
+          <h2>Report a Lost or Found Item</h2>
+          <p>Submit details to notify the campus network and speed up recovery.</p>
+        </div>
+
+        <div class="form-container glass-card scroll-reveal">
+          <!-- Multi-step Progress Indicator -->
+          <div class="progress-bar-container">
+            <div class="progress-line" id="progress-line"></div>
+            <div class="progress-steps">
+              <div class="progress-step active" data-step="1">
+                <div class="step-num">1</div>
+                <span class="step-title">Details</span>
+              </div>
+              <div class="progress-step" data-step="2">
+                <div class="step-num">2</div>
+                <span class="step-title">Location & Time</span>
+              </div>
+              <div class="progress-step" data-step="3">
+                <div class="step-num">3</div>
+                <span class="step-title">Contact</span>
+              </div>
+              <div class="progress-step" data-step="4">
+                <div class="step-num">4</div>
+                <span class="step-title">Review</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Multi-step Form -->
+          <form id="report-item-form" enctype="multipart/form-data" novalidate>
+            <!-- Step 1: Item Details -->
+            <div class="form-step active" data-step="1">
+              <h3 class="step-heading">Step 1: Item details</h3>
+              
+              <!-- Report Type Toggle -->
+              <div class="form-group">
+                <label>Did you lose or find this item?</label>
+                <div class="status-toggle-group">
+                  <input type="radio" id="status-lost" name="status" value="lost" checked>
+                  <label for="status-lost" class="toggle-btn lost-toggle">
+                    <i data-lucide="frown"></i> I Lost It
+                  </label>
+                  
+                  <input type="radio" id="status-found" name="status" value="found">
+                  <label for="status-found" class="toggle-btn found-toggle">
+                    <i data-lucide="smile"></i> I Found It
+                  </label>
+                </div>
+              </div>
+
+              <!-- Item Name -->
+              <div class="form-group">
+                <label for="item-title">Item Name <span class="required">*</span></label>
+                <input type="text" id="item-title" name="title" placeholder="e.g. Black Leather Wallet, iPhone 13 Pro" required>
+                <span class="error-msg" id="error-title"></span>
+              </div>
+
+              <!-- Category Grid Selector -->
+              <div class="form-group">
+                <label>Category <span class="required">*</span></label>
+                <input type="hidden" id="item-category" name="category" required>
+                <div class="category-grid" id="category-selector">
+                  <div class="category-card" data-val="Electronics">
+                    <i data-lucide="laptop"></i>
+                    <span>Electronics</span>
+                  </div>
+                  <div class="category-card" data-val="ID Cards">
+                    <i data-lucide="contact-2"></i>
+                    <span>ID Cards</span>
+                  </div>
+                  <div class="category-card" data-val="Keys">
+                    <i data-lucide="key"></i>
+                    <span>Keys</span>
+                  </div>
+                  <div class="category-card" data-val="Clothing">
+                    <i data-lucide="shirt"></i>
+                    <span>Clothing</span>
+                  </div>
+                  <div class="category-card" data-val="Books">
+                    <i data-lucide="book-open"></i>
+                    <span>Books</span>
+                  </div>
+                  <div class="category-card" data-val="Accessories">
+                    <i data-lucide="watch"></i>
+                    <span>Accessories</span>
+                  </div>
+                  <div class="category-card" data-val="Other">
+                    <i data-lucide="help-circle"></i>
+                    <span>Other</span>
+                  </div>
+                </div>
+                <span class="error-msg" id="error-category"></span>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group">
+                <label for="item-description">Description <span class="required">*</span></label>
+                <textarea id="item-description" name="description" placeholder="Provide distinct characteristics like color, brand, stickers, contents inside, password locks, etc." maxlength="500" required></textarea>
+                <div class="char-counter"><span id="description-char-count">0</span> / 500 characters</div>
+                <span class="error-msg" id="error-description"></span>
+              </div>
+
+              <!-- Drag & Drop Zone -->
+              <div class="form-group">
+                <label>Item Image (Optional)</label>
+                <div class="drag-drop-zone" id="drag-drop-zone">
+                  <i data-lucide="image" class="upload-icon"></i>
+                  <p class="upload-text">Drag & drop item image here, or <span>browse file</span></p>
+                  <p class="upload-hint">Supports PNG, JPG, JPEG, WEBP (Max 5MB)</p>
+                  <input type="file" id="item-image-input" name="image" accept="image/*" class="hidden">
+                  <div class="preview-container hidden" id="image-preview-container">
+                    <img src="" alt="Preview" id="image-preview">
+                    <button type="button" class="remove-preview-btn" id="remove-preview-btn">
+                      <i data-lucide="x"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <div></div> <!-- spacer -->
+                <button type="button" class="btn btn-primary btn-next" data-next="2">
+                  Next: Location & Time <i data-lucide="arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2: Location & Time -->
+            <div class="form-step" data-step="2">
+              <h3 class="step-heading">Step 2: Location & Time</h3>
+
+              <!-- Zone Dropdown -->
+              <div class="form-group">
+                <label for="item-location">Where was it lost/found? <span class="required">*</span></label>
+                <div class="filter-select-wrapper border-field">
+                  <i data-lucide="map-pin" class="select-icon"></i>
+                  <select id="item-location" name="location" required>
+                    <option value="" disabled selected>Select Campus Zone</option>
+                    <option value="Library">Library</option>
+                    <option value="Cafeteria">Cafeteria</option>
+                    <option value="Dorm Block A">Dorm Block A</option>
+                    <option value="Dorm Block B">Dorm Block B</option>
+                    <option value="Dorm Block C">Dorm Block C</option>
+                    <option value="Sports Ground">Sports Ground</option>
+                    <option value="Auditorium">Auditorium</option>
+                    <option value="Parking Lot">Parking Lot</option>
+                    <option value="Admin Block">Admin Block</option>
+                    <option value="Other">Other Zone</option>
+                  </select>
+                </div>
+                <span class="error-msg" id="error-location"></span>
+              </div>
+
+              <!-- Campus Map Picker Preview (Mock Interactive Map) -->
+              <div class="form-group">
+                <label>Or select zone on campus map</label>
+                <div class="mock-map" id="campus-map-picker">
+                  <div class="map-overlay">Interactive Campus Map</div>
+                  <!-- Map grid layout representing zones -->
+                  <div class="map-grid">
+                    <div class="map-zone" data-zone="Dorm Block A">Dorm A</div>
+                    <div class="map-zone" data-zone="Dorm Block B">Dorm B</div>
+                    <div class="map-zone" data-zone="Dorm Block C">Dorm C</div>
+                    <div class="map-zone" data-zone="Library">Library</div>
+                    <div class="map-zone" data-zone="Admin Block">Admin</div>
+                    <div class="map-zone" data-zone="Cafeteria">Cafeteria</div>
+                    <div class="map-zone" data-zone="Sports Ground">Sports</div>
+                    <div class="map-zone" data-zone="Auditorium">Auditorium</div>
+                    <div class="map-zone" data-zone="Parking Lot">Parking</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Date Picker -->
+              <div class="form-group">
+                <label for="item-dateLost">Date & Time Lost/Found <span class="required">*</span></label>
+                <input type="datetime-local" id="item-dateLost" name="dateLost" required>
+                <span class="error-msg" id="error-dateLost"></span>
+              </div>
+
+              <!-- Landmarks / Extra Context -->
+              <div class="form-group">
+                <label for="item-landmarks">Landmarks or Context (Optional)</label>
+                <input type="text" id="item-landmarks" name="landmarks" placeholder="e.g. Near the library entrance stairs, under the table 4">
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary btn-prev" data-prev="1">
+                  <i data-lucide="arrow-left"></i> Back
+                </button>
+                <button type="button" class="btn btn-primary btn-next" data-next="3">
+                  Next: Contact Info <i data-lucide="arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 3: Contact Info -->
+            <div class="form-step" data-step="3">
+              <h3 class="step-heading">Step 3: Contact Information</h3>
+
+              <!-- Name -->
+              <div class="form-group">
+                <label for="reporter-name">Your Full Name <span class="required">*</span></label>
+                <input type="text" id="reporter-name" name="reporterName" placeholder="e.g. Jane Doe" required>
+                <span class="error-msg" id="error-reporterName"></span>
+              </div>
+
+              <!-- Student ID -->
+              <div class="form-group">
+                <label for="reporter-student-id">Student ID / Faculty ID (Optional)</label>
+                <input type="text" id="reporter-student-id" name="reporterStudentId" placeholder="e.g. CS2024091">
+              </div>
+
+              <!-- Email -->
+              <div class="form-group">
+                <label for="reporter-email">Campus Email Address <span class="required">*</span></label>
+                <input type="email" id="reporter-email" name="reporterEmail" placeholder="e.g. jane.doe@campus.edu" required>
+                <span class="error-msg" id="error-reporterEmail"></span>
+              </div>
+
+              <!-- Phone -->
+              <div class="form-group">
+                <label for="reporter-phone">Phone / WhatsApp Number (Optional)</label>
+                <input type="tel" id="reporter-phone" name="reporterPhone" placeholder="e.g. +1234567890">
+              </div>
+
+              <!-- Contact Preference Toggle -->
+              <div class="form-group">
+                <label>Preferred Contact Method</label>
+                <div class="contact-pref-group">
+                  <input type="radio" id="pref-email" name="reporterPreferContact" value="email" checked>
+                  <label for="pref-email" class="pref-btn">
+                    <i data-lucide="mail"></i> Email Only
+                  </label>
+                  
+                  <input type="radio" id="pref-phone" name="reporterPreferContact" value="phone">
+                  <label for="pref-phone" class="pref-btn">
+                    <i data-lucide="phone"></i> Phone/WhatsApp
+                  </label>
+
+                  <input type="radio" id="pref-either" name="reporterPreferContact" value="either">
+                  <label for="pref-either" class="pref-btn">
+                    <i data-lucide="check-square"></i> Either
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary btn-prev" data-prev="2">
+                  <i data-lucide="arrow-left"></i> Back
+                </button>
+                <button type="button" class="btn btn-primary btn-next" id="btn-to-review" data-next="4">
+                  Next: Review Report <i data-lucide="arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 4: Review & Submit -->
+            <div class="form-step" data-step="4">
+              <h3 class="step-heading">Step 4: Review details</h3>
+
+              <!-- Review Summary Card -->
+              <div class="review-card glass-card">
+                <div class="review-header">
+                  <div class="review-badge" id="review-type-badge">LOST</div>
+                  <h4 id="review-title">Item Name</h4>
+                </div>
+                <div class="review-body">
+                  <div class="review-meta">
+                    <p><i data-lucide="grid"></i> <strong>Category:</strong> <span id="review-category">Category</span></p>
+                    <p><i data-lucide="map-pin"></i> <strong>Location:</strong> <span id="review-location">Location</span></p>
+                    <p><i data-lucide="calendar"></i> <strong>Date:</strong> <span id="review-date">Date</span></p>
+                  </div>
+                  <div class="review-desc-section">
+                    <strong>Description:</strong>
+                    <p id="review-description">Description text...</p>
+                  </div>
+                  <div class="review-contact-section">
+                    <strong>Contact Details:</strong>
+                    <p id="review-contact">Name (Email)</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary btn-prev" data-prev="3">
+                  <i data-lucide="arrow-left"></i> Back
+                </button>
+                <button type="submit" class="btn btn-primary btn-glow" id="submit-form-btn">
+                  <span class="btn-text">Submit Report</span>
+                  <div class="spinner hidden" id="submit-spinner"></div>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Success Message Panel -->
+          <div id="form-success-panel" class="success-panel hidden">
+            <div class="success-icon-wrapper">
+              <i data-lucide="check-circle-2"></i>
+            </div>
+            <h2>Your item has been posted!</h2>
+            <p>We've successfully updated the campus lost & found index. We'll send an email if someone finds/claims it.</p>
+            <div class="success-actions">
+              <button class="btn btn-primary" id="btn-post-another">Post Another Item</button>
+              <a href="#browse-section" class="btn btn-secondary">Go to Browse</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <i data-lucide="search" class="logo-icon"></i>
+          <span>Campus<span class="logo-accent">Reclaim</span></span>
+        </div>
+        <p>Connecting students, faculty, and campus staff to return lost items safely and quickly.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#browse-section">Browse Items</a></li>
+          <li><a href="#report-section">Report Item</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Campus Links</h4>
+        <ul>
+          <li><a href="https://www.google.com/maps/search/uvce/@12.9754489,77.5850051,18.04z?entry=ttu&g_ep=EgoyMDI2MDYyMi4wIKXMDSoASAFQAw%3D%3D" onclick="alert('Map placeholder'); return false;">Campus Map</a></li>
+          <li><a href="#" onclick="alert('Campus Safety contact: 555-0199'); return false;">Campus Safety</a></li>
+          <li><a href="#" onclick="alert('Student Center desk info'); return false;">Student Center Desk</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <h4>Connect</h4>
+        <div class="social-icons">
+          <a href="https://github.com/" aria-label="Github"><i data-lucide="github"></i></a>
+          <a href="https://x.com/home" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+          <a href="https://www.instagram.com/?hl=en" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 CampusReclaim. Built with ❤️ for college campuses.</p>
+    </div>
+  </footer>
+
+  <!-- Detail Modal/Drawer -->
+  <div class="modal-overlay hidden" id="detail-modal">
+    <div class="modal-card glass-card">
+      <button class="modal-close-btn" id="modal-close" aria-label="Close details">
+        <i data-lucide="x"></i>
+      </button>
+      <div class="modal-content-wrapper">
+        <div class="modal-image-panel" id="modal-image-panel">
+          <img src="" alt="Item Image" id="modal-item-image">
+          <div class="modal-image-placeholder" id="modal-image-placeholder">
+            <i data-lucide="image"></i>
+            <span>No Image Uploaded</span>
+          </div>
+        </div>
+        <div class="modal-details-panel">
+          <div class="modal-header">
+            <div class="badge-row">
+              <span class="badge" id="modal-status-badge">Lost</span>
+              <span class="badge category-pill" id="modal-category-badge">Category</span>
+            </div>
+            <h2 id="modal-title">Item Name</h2>
+            <div class="modal-views">
+              <i data-lucide="eye"></i> <span id="modal-views-count">0</span> views
+            </div>
+          </div>
+
+          <div class="modal-body-content">
+            <div class="modal-meta-grid">
+              <div class="meta-card">
+                <i data-lucide="map-pin"></i>
+                <div>
+                  <strong>Location</strong>
+                  <span id="modal-location">Library</span>
+                </div>
+              </div>
+              <div class="meta-card">
+                <i data-lucide="calendar"></i>
+                <div>
+                  <strong>Date Reported</strong>
+                  <span id="modal-date">June 25, 2026</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <h3>Description</h3>
+              <p id="modal-description">Detailed description goes here...</p>
+            </div>
+
+            <div class="detail-section" id="modal-reporter-info-section">
+              <h3>Reporter Details</h3>
+              <div class="reporter-card glass-card">
+                <p><strong>Name:</strong> <span id="modal-reporter-name">John Doe</span></p>
+                <p id="modal-reporter-pref-box"><strong>Preferred Contact:</strong> <span id="modal-reporter-pref">Email</span></p>
+                <div class="contact-details-hidden" id="modal-contact-details">
+                  <p><strong>Email:</strong> <span id="modal-reporter-email">john@campus.edu</span></p>
+                  <p id="modal-phone-row"><strong>Phone:</strong> <span id="modal-reporter-phone">+12345</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-primary btn-glow w-100" id="btn-found-this">
+              <i data-lucide="heart"></i> I Found This / Claims!
+            </button>
+            <button class="btn btn-secondary w-100" id="btn-delete-report">
+              <i data-lucide="trash-2"></i> Delete This Report
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- "I Found This!" Message Modal -->
+  <div class="modal-overlay hidden" id="found-modal">
+    <div class="modal-card glass-card modal-sm">
+      <button class="modal-close-btn" id="found-modal-close" aria-label="Close form">
+        <i data-lucide="x"></i>
+      </button>
+      <h3>Help return this item!</h3>
+      <p>Submit your contact info and a message. We'll email the reporter immediately with your details.</p>
+      
+      <form id="found-submit-form" class="mt-4">
+        <div class="form-group">
+          <label for="found-finderName">Your Name <span class="required">*</span></label>
+          <input type="text" id="found-finderName" required placeholder="e.g. Jack Smith">
+        </div>
+        <div class="form-group">
+          <label for="found-finderEmail">Your Email <span class="required">*</span></label>
+          <input type="email" id="found-finderEmail" required placeholder="e.g. jack.smith@campus.edu">
+        </div>
+        <div class="form-group">
+          <label for="found-finderPhone">Your Phone / WhatsApp (Optional)</label>
+          <input type="tel" id="found-finderPhone" placeholder="e.g. +12345678">
+        </div>
+        <div class="form-group">
+          <label for="found-finderMessage">Verification / Coordination Message <span class="required">*</span></label>
+          <textarea id="found-finderMessage" required placeholder="Describe where you found it, how they can contact you, or specify details to verify ownership." rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-glow w-100 mt-2" id="submit-found-btn">
+          <span class="btn-text">Send Notification</span>
+          <div class="spinner hidden" id="found-spinner"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Report Verification Modal -->
+  <div class="modal-overlay hidden" id="delete-modal">
+    <div class="modal-card glass-card modal-sm">
+      <button class="modal-close-btn" id="delete-modal-close" aria-label="Close form">
+        <i data-lucide="x"></i>
+      </button>
+      <h3>Delete Report</h3>
+      <p>Please verify your ownership of this report. Enter either your campus email or Student ID used when creating this post.</p>
+      
+      <form id="delete-submit-form" class="mt-4">
+        <div class="form-group">
+          <label for="delete-email">Campus Email</label>
+          <input type="email" id="delete-email" placeholder="jane.doe@campus.edu">
+        </div>
+        <div class="form-group">
+          <label>Or</label>
+        </div>
+        <div class="form-group">
+          <label for="delete-studentId">Student ID / Faculty ID</label>
+          <input type="text" id="delete-studentId" placeholder="CS2024091">
+        </div>
+
+        <button type="submit" class="btn btn-danger w-100 mt-2" id="submit-delete-btn">
+          <span class="btn-text">Confirm Delete</span>
+          <div class="spinner hidden" id="delete-spinner"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Portal -->
+  <div class="toast-portal" id="toast-portal"></div>
+
+  <!-- Client-side Scripts -->
+  <script type="module" src="scripts/app.js"></script>
+  <script type="module" src="scripts/report-form.js"></script>
+</body>
+</html>
